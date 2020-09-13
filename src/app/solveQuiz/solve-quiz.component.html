@@ -1,0 +1,14 @@
+<h3 >{{quiz?.title}}</h3>
+
+<div *ngIf = "!isLoaded" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+
+<div *ngIf = "imageUrl" class="row">
+    <div class="col m-2">
+        <img  [src]="imageUrl" class="card-img-top" alt="Задание">
+    </div>
+</div>
+
+<upload-files (upload) = "onUploadFiles($event)"></upload-files>
+<button (click) = "save()" class="btn btn-primary">Отправить на проверку</button>

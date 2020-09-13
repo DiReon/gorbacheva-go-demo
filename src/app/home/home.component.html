@@ -1,0 +1,18 @@
+<h1 *ngIf = "appUser as user" class="greeting">Привет, {{ user.userName }}, {{user.group}} </h1>
+<p>Мои задания:</p>
+<ul class="list-group">Задания для выполнения: 
+    <div *ngIf = "!assignedQuizzes?.length">отсутствуют</div>
+    <li *ngFor = "let quiz of assignedQuizzes" class="list-group-item">
+        <a [routerLink] = "['quiz/', quiz?.quizId]">Quiz: {{quiz?.title}}</a>
+    </li>
+</ul>
+<ul class="list-group">На проверке:
+    <li *ngFor = "let quiz of submittedQuizzes" class="list-group-item">
+        {{quiz?.title}}
+    </li>
+</ul>
+<ul class="list-group">Проверенные задания:
+    <li *ngFor = "let quiz of reviewedQuizzes" class="list-group-item">
+        {{quiz?.title}}
+    </li>
+</ul>

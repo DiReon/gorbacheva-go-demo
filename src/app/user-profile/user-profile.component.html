@@ -1,0 +1,36 @@
+<form #f= "ngForm" *ngIf = "appUser as user" (ngSubmit) = "save(f.value)">
+    <div class="row">
+        <div class="col-xs-3">
+            <img [src]="user.photoUrl" alt="Фото пользователя" style="width: 150px; border-radius: 100%;">
+        </div>    
+        <div class="col-xs-9">
+            <div class="form-group">
+                <label for="photoUrl">Ссылка на фото:</label>
+                <input #photoUrl="ngModel" [(ngModel)] = "user.photoUrl" name = "photoUrl" id= "photoUrl" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="userName">Ваше имя:</label>
+        <input #userName="ngModel" [(ngModel)] = "user.userName" name = "userName" id= "userName" type="text" class="form-control" required>
+        <div class="alert alert-danger" *ngIf="userName.touched && userName.invalid">Необходимо ввести имя пользователя</div>
+    </div>
+    <div *ngIf="!user.isAdmin" class = "form-group">
+        <label for = "group">Класс:</label>
+        <select   #group = "ngModel" [(ngModel)] = "user.group" name = "group" id = "group" type = "text" class="form-control" required>
+            <option>Выбери свой класс</option>
+            <option *ngFor = "let group of groups$ | async" [value]="group.title">{{ group.title }}</option>
+        </select>
+        <div class="alert alert-danger" *ngIf="group.touched && group.invalid">Выберите Ваш класс</div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col align-self-start">
+                <button class="btn btn-primary">Сохранить</button>
+            </div>
+            <div class="col align-self-end">
+                <button type="button" (click) = "delete()" class="btn btn-danger">Удалить профиль</button>
+            </div>
+        </div>
+    </div>
+</form>

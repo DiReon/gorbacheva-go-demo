@@ -1,0 +1,6 @@
+<h3>Мои классы:</h3>
+<ul class="list-group">
+    <li *ngFor = "let group of groups$ | async" class="list-group-item">
+        <a [routerLink] = "['/admin/groups/', group.title]" >{{group.title}}</a>
+    </li>
+</ul>

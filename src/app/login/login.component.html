@@ -1,0 +1,28 @@
+<div class="container pt-3">
+    <div class="row justify-content-sm-center">
+      <div class="col-sm-10 col-md-6">
+        <div class="card border-info">
+          <div class="card-header">Вход</div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 text-center">
+                <img src="https://placeimg.com/128/128/nature">
+              </div>
+              <div class="col-md-8">
+                <form #f = "ngForm" (ngSubmit) = "loginByEmail(f.value)">
+                  <input #email = "ngModel" [(ngModel)]="email2" name="email" type="text" class="form-control mb-2" placeholder="Email" required autofocus>
+                  <input #password = "ngModel" [(ngModel)]="password2" name="password" type="password" class="form-control mb-2" placeholder="Пароль" required>
+                  <button class="btn btn-lg btn-primary btn-block mb-1">Войти</button>
+                </form>
+              </div>
+            </div>
+            <div class="footer">
+                <a routerLink = "/register" class="link">Регистрация</a>
+            </div>
+          </div>
+          <button (click)="login()" class="btn btn-primary">Войти с Google</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<br>

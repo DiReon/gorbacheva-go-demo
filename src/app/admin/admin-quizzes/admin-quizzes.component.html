@@ -1,0 +1,34 @@
+<a routerLink="/admin/quizzes/new" class="btn btn-primary">Добавить задание</a>
+<br><br>
+<input #query type="text" class="form-control" placeholder="Искать..." (keyup) = "filter(query.value)">
+<br>
+<ngx-datatable 
+  class="material" 
+  [rows]="rows"
+  [columnMode]="ColumnMode.force" 
+  [headerHeight]="50" 
+  [footerHeight]="50"
+  [rowHeight]="50"
+  [limit]="20"
+   >
+  <ngx-datatable-column name="Название" prop = "title">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{row.title}}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Категория" prop ="category">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{row.category}}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column  name="Действия" prop = "key">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <a *ngIf = "!groupId" [routerLink]="['/admin/quizzes/', row.key]">
+        <fa-icon [icon]="icon" size="2x"></fa-icon>
+      </a>
+      <a *ngIf = "groupId" (click) = "assignQuiz(row.key)" class="btn btn-primary">
+        Задать
+      </a>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>

@@ -1,0 +1,10 @@
+<h3 *ngIf = "appUser$ | async as user">Здравствуйте, {{user.userName}}</h3>
+
+<div class="row">
+    <div class="col">
+        <a routerLink = "/admin/quizzes" class="btn btn-info">Задания</a>
+    </div>
+    <div class="col">
+        <a routerLink = "/admin/groups" class="btn btn-primary">Классы</a>
+    </div>
+</div>

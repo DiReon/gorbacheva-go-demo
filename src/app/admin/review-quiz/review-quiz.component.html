@@ -1,0 +1,13 @@
+<h3 >{{quiz?.title}}</h3>
+
+<div *ngIf = "!isLoaded" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+
+<ng-container *ngIf = "answerUrls">
+    <div *ngFor = "let url of answerUrls" class="row m-2">
+        <img [src]="url" alt="Фото решения" class="col">
+    </div>
+</ng-container>
+
+<button (click) = "markReviewed()" class="btn btn-primary">Проверено</button>

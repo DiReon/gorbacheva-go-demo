@@ -1,0 +1,5 @@
+<form #f = "ngForm" (ngSubmit) = "register(f.value)">
+    <input #email = "ngModel" [(ngModel)] = "email2" name ="email" type="text" class="form-control mb-2" placeholder="Email" required autofocus>
+    <input #password = "ngModel" [(ngModel)] = "password2" name="password" type="password" class="form-control mb-2" placeholder="Пароль" required>
+    <button class="btn btn-lg btn-primary btn-block mb-1">Зарегистрироваться</button>
+</form>

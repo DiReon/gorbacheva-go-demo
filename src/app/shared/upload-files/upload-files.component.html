@@ -1,0 +1,12 @@
+<div class="form-group">
+    <label for="file">Выберите файл с заданием для загрузки:</label>
+    <input type="file" multiple = true id="file" (change) = "uploadFile($event)" class="form-control-file">
+    <p *ngIf="uploadCompleted">Загрузка завершена!</p>
+</div>
+
+<ng-container *ngIf = "urls">
+    <div *ngFor = "let url of urls" class="row m-2">
+        <img [src]="url" alt="Загруженный файл" class="col">
+        <button (click) = "deleteFile(url)" class="btn btn-danger">[Х]</button>
+    </div>
+</ng-container>
