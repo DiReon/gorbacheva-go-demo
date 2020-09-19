@@ -1,10 +1,16 @@
-<h3 >{{quiz?.title}}</h3>
+<h3>{{quiz?.title}}</h3>
 
 <div *ngIf = "!isLoaded" class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
 </div>
 
+<ng-container *ngIf = "imageUrl">
+    <h4 class="text-center">Условие:</h4>
+    <img [src]="imageUrl" alt="Фото условия" class="col">
+</ng-container>
+
 <ng-container *ngIf = "answerUrls">
+    <h4 class="text-center">Решение:</h4>
     <div *ngFor = "let url of answerUrls" class="row m-2">
         <img [src]="url" alt="Фото решения" class="col">
     </div>

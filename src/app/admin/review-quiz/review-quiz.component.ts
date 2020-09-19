@@ -3,7 +3,6 @@ import { AppUser } from 'src/app/models/app-user';
 import { Quiz } from 'src/app/models/quiz';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/auth.service';
 import { UserService } from 'src/app/user.service';
 
 @Component({
@@ -12,14 +11,10 @@ import { UserService } from 'src/app/user.service';
   styleUrls: ['./review-quiz.component.css']
 })
 export class ReviewQuizComponent implements OnInit {
-  user: AppUser;
   quizId: string;
   quiz: Quiz;
-  quizzes: Quiz[];
-  
   answerUrls: string[];
   imageUrl: string;
-  variant: number;
   studentId: string;
   student: AppUser;
   startTime: number;
@@ -28,7 +23,6 @@ export class ReviewQuizComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService,
     private userService: UserService
   ) {
     this.quizId = this.route.snapshot.params.id;
@@ -38,6 +32,7 @@ export class ReviewQuizComponent implements OnInit {
         this.student = u;
         this.quiz = this.student.quizzes.filter(q => q.quizId == this.quizId)[0];
         this.answerUrls = this.quiz.answerUrls;
+        this.imageUrl = this.quiz.quizUrl;
         this.isLoaded = true;
       });
     };

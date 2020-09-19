@@ -13,6 +13,7 @@ import { GroupComponent } from './group/group.component';
 import { RegisterComponent } from './register/register.component';
 import { ReviewQuizComponent } from './admin/review-quiz/review-quiz.component';
 import { SolveQuizComponent } from './solveQuiz/solve-quiz.component';
+import { ReviewedQuizzesComponent } from './admin/reviewed-quizzes/reviewed-quizzes.component';
 
 
 const routes: Routes = [
@@ -20,18 +21,20 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard]},
-  {path: 'quiz/:student/:id', component: ReviewQuizComponent, canActivate: [AuthGuard]},
   {path: 'quiz/:id', component: SolveQuizComponent, canActivate: [AuthGuard]},
 
   {path: 'admin/quizzes/new', component: QuizFormComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/quizzes/:id', component: QuizFormComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/quizzes', component: AdminQuizzesComponent, canActivate: [AdminAuthGuard]},
+
+  
   
   {path: 'admin/groups/:group/quizzes', component: AdminQuizzesComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/groups/:id', component: GroupComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/groups', component: AdminGroupsComponent, canActivate: [AdminAuthGuard]},
+  {path: 'admin/reviewed/:student', component: ReviewedQuizzesComponent, canActivate: [AdminAuthGuard]},
+  {path: 'admin/:student/:id', component: ReviewQuizComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin', component: AdminComponent, canActivate: [AdminAuthGuard]}
-
 ];
 
 @NgModule({

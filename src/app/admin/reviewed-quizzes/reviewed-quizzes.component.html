@@ -1,0 +1,9 @@
+<ul class="list-group">
+    <ng-container *ngFor = "let quiz of student?.quizzes">
+        <li *ngIf = "quiz?.isReviewed" class="list-group-item">
+            <a [routerLink] = "['/admin/', student.userId, quiz.quizId ]">
+                {{quiz.title}}
+            </a>
+        </li>
+    </ng-container>
+</ul>

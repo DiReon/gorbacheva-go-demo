@@ -23,6 +23,7 @@ import { UploadFilesComponent } from './shared/upload-files/upload-files.compone
 import { RegisterComponent } from './register/register.component';
 import { ReviewQuizComponent } from './admin/review-quiz/review-quiz.component';
 import { SolveQuizComponent } from './solveQuiz/solve-quiz.component';
+import { ReviewedQuizzesComponent } from './admin/reviewed-quizzes/reviewed-quizzes.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SolveQuizComponent } from './solveQuiz/solve-quiz.component';
     GroupComponent,
     UploadFilesComponent,
     RegisterComponent,
-    ReviewQuizComponent
+    ReviewQuizComponent,
+    ReviewedQuizzesComponent
   ],
   imports: [
     BrowserModule,

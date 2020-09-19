@@ -17,17 +17,17 @@
                     </ng-container>
                 </ul>
             </div>
-            <div *ngIf = "student.quizzes" class="col">Проверить:
+            <div *ngIf = "student.quizzes" class="col">На проверке:
                 <ul class="list-group">
                     <ng-container *ngFor = "let quiz of student.quizzes">
-                        <a [routerLink] = "['/quiz/', student.userId, quiz.quizId ]">
-                            <li *ngIf = "quiz.isSubmitted" class="list-group-item">{{quiz.title}}</li>
+                        <a [routerLink] = "['/admin/', student.userId, quiz.quizId ]">
+                            <li *ngIf = "quiz.isSubmitted && (!quiz.isReviewed)" class="list-group-item">{{quiz.title}}</li>
                         </a>
                     </ng-container>
                 </ul>
             </div>
             <div *ngIf = "student.quizzes" class="col">
-                <a [routerLink] = "['/quiz/', student.userId]">Проверенные</a>
+                <a [routerLink] = "['/admin/reviewed/', student.userId]">Проверенные</a>
             </div>
         </div>
     </li>

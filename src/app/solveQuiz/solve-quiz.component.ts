@@ -31,7 +31,7 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.appUser$.subscribe(u => {
       this.user = new AppUser(u);
       console.table(this.user);
-      this.quiz = this.user.quizzes.filter(q => q.quizId == this.quizId)[0];
+      if (this.user.quizzes) this.quiz = this.user.quizzes.filter(q => q.quizId == this.quizId)[0];
       this.imageUrl = this.quiz.quizUrl;
       this.quiz.startTime = new Date().getTime();
       console.log(`Start time: ${this.quiz.startTime}`);
