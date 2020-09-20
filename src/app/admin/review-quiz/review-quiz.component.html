@@ -1,7 +1,14 @@
 <h3>{{quiz?.title}}</h3>
-
+<h5>Время на выполнение: {{quiz?.timeLimit}} минут</h5>
 <div *ngIf = "!isLoaded" class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
+</div>
+
+<div class="row">
+    <div class="col">Выдан: {{quiz?.assignedTime | date: 'medium'}}</div>
+    <div class="col">Начат: {{quiz?.startTime | date: 'medium'}}</div>
+    <div class="col">Начат: {{quiz?.endTime | date: 'medium'}}</div>
+    <div class="col">Выполнен за {{executionTime}} минут</div>
 </div>
 
 <ng-container *ngIf = "imageUrl">

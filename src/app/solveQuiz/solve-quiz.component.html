@@ -4,11 +4,18 @@
     <span class="sr-only">Loading...</span>
 </div>
 
+<div *ngIf = "counter$ | async as counter; else timeout">
+    На выполнение задания осталось {{counter}} минут
+</div>
+
+<ng-template #timeout>Время вышло</ng-template>
+
+<h4 class="text-center">Задание</h4>
 <div *ngIf = "imageUrl" class="row">
     <div class="col m-2">
         <img  [src]="imageUrl" class="card-img-top" alt="Задание">
     </div>
 </div>
-
+Загрузи свое решение:
 <upload-files (upload) = "onUploadFiles($event)"></upload-files>
 <button (click) = "save()" class="btn btn-primary">Отправить на проверку</button>

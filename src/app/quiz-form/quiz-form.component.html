@@ -17,7 +17,10 @@
                 </select>
                 <div class="alert alert-danger" *ngIf="category.touched && category.invalid">Выберите категорию теста</div>
             </div>
-            
+            <div class="form-group">
+                <label for="timeLimit">Ограничение по времени, минут:</label>
+                <input #timeLimit = "ngModel" [(ngModel)] = "quiz.timeLimit" name="timeLimit" id="timeLimit" type="text" class="form-control" required>
+            </div>
             <upload-files [urls] = "quiz.imageUrls" [quiz] = "quiz" (upload) = "onUploadFiles($event)"></upload-files>
 
             <button class="btn btn-primary">Сохранить</button>

@@ -4,7 +4,6 @@ import { QuizService } from '../quiz.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { CategoryService } from '../category.service';
-import { Observable } from 'rxjs';
  
 @Component({
   selector: 'app-quiz-form',
@@ -39,6 +38,7 @@ export class QuizFormComponent implements OnInit {
     console.log('Form data: ', value);
     this.quiz.title = value.title;
     this.quiz.category = value.category;
+    this.quiz.timeLimit = (value.timeLimit ? value.timeLimit : 43200);
     if (this.quizId) this.quizService.update(this.quizId, this.quiz)
     else this.quizService.create(value);
     this.router.navigate(['/admin/quizzes'])

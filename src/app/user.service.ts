@@ -78,6 +78,15 @@ export class UserService {
     console.log(`Cancelled all quizzes of user ${userId}`);
   }
 
+  startQuiz(userId, quizId, startTime) {
+    this.db.object(`/users/${userId}/quizzes/${quizId}`).update(
+      {
+        isStarted: true,
+        startTime: startTime
+      }
+    )
+  }
+
   assignDemoQuizzes(userId) {
     this.db.object(`/users/${userId}`).update({
       quizzes: [
@@ -85,13 +94,15 @@ export class UserService {
           assignedTime: 1599998129433,
           quizId: 'M9dvE9abhCbuAUFZWwV',
           quizUrl: "https://firebasestorage.googleapis.com/v0/b/gorbacheva-go.appspot.com/o/quizzes%2F%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D0%B0%2F%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%8B%2F1.PNG?alt=media&token=e005d4c3-0da1-465b-a2c5-735e625d5daf",
-          title: 'Логарифмы'
+          title: 'Логарифмы',
+          timeLimit: 40,
         },
         {
           assignedTime: 1599998129433,
           quizId: 'M9dvMNUDhPdw271pzdi',
           quizUrl: "https://firebasestorage.googleapis.com/v0/b/gorbacheva-go.appspot.com/o/quizzes%2F%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D0%B0%2F%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20%D1%83%D1%80%D0%B0%D0%B2%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9%2F0.PNG?alt=media&token=4107e9f3-64c9-48c7-aa1c-56d23c02f5e1",
-          title: 'Системы уравнений'
+          title: 'Системы уравнений',
+          timeLimit: 40,
         },
       ]
     })

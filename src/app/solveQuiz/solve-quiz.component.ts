@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, timer } from 'rxjs';
 import { Quiz } from '../models/quiz';
 import { AppUser } from '../models/app-user';
 import { AuthService } from '../auth.service';
 import { UserService } from '../user.service';
+import { map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-quiz',
@@ -16,11 +17,13 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
   quizId: string;
   quiz: Quiz;
   quizzes: Quiz[];
-  
+  timeLimit: number;
   imageUrl: string;
   startTime: number;
   subscription: Subscription;
   isLoaded = false;
+  counter$: Observable<number>;
+  count: number;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -31,12 +34,23 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.appUser$.subscribe(u => {
       this.user = new AppUser(u);
       console.table(this.user);
-      if (this.user.quizzes) this.quiz = this.user.quizzes.filter(q => q.quizId == this.quizId)[0];
-      this.imageUrl = this.quiz.quizUrl;
-      this.quiz.startTime = new Date().getTime();
-      console.log(`Start time: ${this.quiz.startTime}`);
-      this.quiz.isStarted = true;
-      this.isLoaded = true;
+      if (this.user.quizzes) {
+        this.quiz = this.user.quizzes.filter(q => q.quizId == this.quizId)[0];
+        let quizIndex = this.user.quizzes.indexOf(this.quiz);
+        this.imageUrl = this.quiz.quizUrl;
+        this.timeLimit = this.quiz.timeLimit;
+        if (!this.quiz.startTime) this.quiz.startTime = new Date().getTime();
+        console.log(`Start time: ${this.quiz.startTime}`);
+        this.isLoaded = true;
+        this.quiz.isStarted = true;
+        this.userService.startQuiz(this.user.userId, quizIndex, this.quiz.startTime);
+        this.count = this.quiz.timeLimit + 1 - Math.round((new Date().getTime() - this.quiz.startTime)/60000);
+        console.log("Count: ", this.count);
+        
+        this.counter$ = timer(0, 60000).pipe(
+          take(this.count),
+          map(() => --this.count));  
+      }
     });
   };
 
@@ -45,6 +59,8 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
 
   onUploadFiles(urls) {
     this.quiz.answerUrls = urls;
+
+
   }
 
   save() {

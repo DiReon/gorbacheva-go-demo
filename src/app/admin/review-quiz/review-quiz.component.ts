@@ -19,6 +19,7 @@ export class ReviewQuizComponent implements OnInit {
   student: AppUser;
   startTime: number;
   subscription: Subscription;
+  executionTime: number;
   isLoaded = false;
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +34,7 @@ export class ReviewQuizComponent implements OnInit {
         this.quiz = this.student.quizzes.filter(q => q.quizId == this.quizId)[0];
         this.answerUrls = this.quiz.answerUrls;
         this.imageUrl = this.quiz.quizUrl;
+        this.executionTime = Math.round((this.quiz.endTime - this.quiz.startTime)/60000);
         this.isLoaded = true;
       });
     };

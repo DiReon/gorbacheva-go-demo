@@ -7,6 +7,7 @@ export interface Quiz {
     assignedTime: number,
     startTime: number,
     endTime: number,
+    timeLimit: number,
     answerUrls: string[],
     isSubmitted: boolean,
     isReviewed: boolean,

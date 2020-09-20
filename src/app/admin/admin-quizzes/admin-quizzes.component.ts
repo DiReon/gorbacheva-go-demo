@@ -32,7 +32,6 @@ export class AdminQuizzesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
-    private groupService: GroupService,
     ) { 
     this.groupId = this.route.snapshot.params.group
     this.subscription = this.quizServise.getAll()
@@ -45,6 +44,7 @@ export class AdminQuizzesComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
   filter(query) {
     this.rows = (query) ?
       this.temp.filter(p => p.title.toLowerCase().includes(query.toLowerCase())) :
@@ -54,8 +54,6 @@ export class AdminQuizzesComponent implements OnInit, OnDestroy {
   assignQuiz(quizId: string) {
     let quiz = this.temp.filter(q => q['key'] == quizId)[0];
     quiz.quizId = quizId;
-    //let assignedQuiz = {dateTime: time, quizId: quizId, title: quiz.title, imageUrls: quiz.imageUrls };
-    // this.groupService.push(this.groupId, assignedQuiz);
     this.userService.assignQuizToGroup(this.groupId, quiz);
     this.router.navigate(['/admin/groups/', this.groupId]);
   }
