@@ -12,6 +12,7 @@ import { Quiz } from 'src/app/models/quiz';
 export class UploadFilesComponent implements OnInit {
   @Input("urls") urls:string[];
   @Input('quiz') quiz: Quiz;
+  @Input('userName') userName: string;
   @Output() upload = new EventEmitter();
   uploadCompleted = false;
   subscription: Subscription;
@@ -31,7 +32,7 @@ export class UploadFilesComponent implements OnInit {
   uploadFile(event) {
     const files = event.target.files;
     for (const file of files) {
-      const filePath = (this.quiz ? `/quizzes/${this.quiz.category}/${this.quiz.title}/` : '/answers/') + file.name;
+      const filePath = (this.quiz ? `/quizzes/${this.quiz.category}/${this.quiz.title}/` : `/answers/${this.userName}/${file.name}`);
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, file);
       // this.uploadPercent = task.percentageChanges();

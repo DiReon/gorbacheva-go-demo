@@ -4,13 +4,17 @@ import { AppUser } from './models/app-user';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Quiz} from './models/quiz';
+import { EventService } from './event.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   listRef: AngularFireList<AppUser>;
-  constructor(private db: AngularFireDatabase) { }
+  constructor(
+    private db: AngularFireDatabase,
+    private eventService: EventService,
+  ) { }
 
   save(user) {
     this.db.object('/users/' + user.uid).update({
@@ -19,22 +23,31 @@ export class UserService {
       email: user.email,
       photoUrl: user.photoURL,
     })
+  this.eventService.recordEvent(user.displayName, `зарегистрировался`)
   }
 
   update(userId: string, user: AppUser) {
     console.log('Updating user: ');
     console.table(user);
     this.db.object('/users/' + userId).update(user)
+    this.eventService.recordEvent(user.userName, `обновил данные`)
+}
+
+  submitQuiz(user: AppUser) {
+    console.log('Submitting quiz:');
+    console.table(user.quizzes);
+    this.db.list(`/users/${user.userId}`).update('quizzes', user.quizzes);
+    this.eventService.recordEvent(user.userName, `отправил на проверку задание "${user.quizzes[user.quizzes.length-1].title}"`)
   }
 
-  submitQuiz(userId: string, quizzes: Quiz[]) {
-    console.log('Submitting quiz:');
-    console.table(quizzes);
-    this.db.list(`/users/${userId}`).update('quizzes', quizzes)
+  reviewQuiz(user: AppUser) {
+    this.db.list(`/users/${user.userId}`).update('quizzes', user.quizzes);
+    this.eventService.recordEvent('', `проверено задание ${user.quizzes[user.quizzes.length-1].title}, которое отправил ${user.userName}"`)
   }
 
   delete(userId) {
     this.db.object('/users/' + userId).remove();
+    this.eventService.recordEvent(userId, 'удален')
   }
 
   get(userId: string): AngularFireObject<AppUser> {
@@ -67,24 +80,28 @@ export class UserService {
         this.db.list('/users/' + s.userId).update('quizzes', s.quizzes)
     })
     })
+    this.eventService.recordEvent(group, `получил задание "${quiz.title}"`);
   }
 
   cancelQuiz(userId, quizId) {
     this.db.object('/users/' + userId + '/quizzes' + quizId).remove();
+    this.eventService.recordEvent('', `Задание пользователя ${userId} отменено`)
   }
 
   cancelUserQuizzes(userId) {
     this.db.list('/users/' + userId + '/quizzes').remove();
     console.log(`Cancelled all quizzes of user ${userId}`);
+    this.eventService.recordEvent('', 'Все задания отменены')
   }
 
-  startQuiz(userId, quizId, startTime) {
-    this.db.object(`/users/${userId}/quizzes/${quizId}`).update(
+  startQuiz(user: AppUser, quizId, quiz: Quiz) {
+    this.db.object(`/users/${user.userId}/quizzes/${quizId}`).update(
       {
         isStarted: true,
-        startTime: startTime
+        startTime: quiz.startTime
       }
     )
+    //this.eventService.recordEvent(user.userName, `начал выполнять задание "${quiz.title}"`)
   }
 
   assignDemoQuizzes(userId) {
@@ -107,12 +124,13 @@ export class UserService {
       ]
     })
     console.log(`Assigned demo quizzes for user ${userId}`);
-    
+    this.eventService.recordEvent('', `Выполнен вход в демоверсию под Учеником. Задания Ученика удалены и ему назначены задания Логарифмы и Системы уравнений`)
   }
 
   cancelAllQuizzes(group) {
     this.getGroup(group).subscribe(users => {
       users.forEach(s => this.db.list('/users/' + s.userId + '/quizzes').remove())
     })
+    this.eventService.recordEvent('', `Все задания в ${group} классе отменены`)
   }
 }

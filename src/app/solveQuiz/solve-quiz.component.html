@@ -17,5 +17,5 @@
     </div>
 </div>
 Загрузи свое решение:
-<upload-files (upload) = "onUploadFiles($event)"></upload-files>
+<upload-files [userName] = "user?.userName" (upload) = "onUploadFiles($event)"></upload-files>
 <button (click) = "save()" class="btn btn-primary">Отправить на проверку</button>

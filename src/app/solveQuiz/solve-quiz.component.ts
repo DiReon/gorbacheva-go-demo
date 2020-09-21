@@ -43,7 +43,7 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
         console.log(`Start time: ${this.quiz.startTime}`);
         this.isLoaded = true;
         this.quiz.isStarted = true;
-        this.userService.startQuiz(this.user.userId, quizIndex, this.quiz.startTime);
+        this.userService.startQuiz(this.user, quizIndex, this.quiz);
         this.count = this.quiz.timeLimit + 1 - Math.round((new Date().getTime() - this.quiz.startTime)/60000);
         console.log("Count: ", this.count);
         
@@ -59,8 +59,6 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
 
   onUploadFiles(urls) {
     this.quiz.answerUrls = urls;
-
-
   }
 
   save() {
@@ -69,7 +67,8 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
     this.quiz.isSubmitted = true;
     console.log('Submitting for review: ');
     console.table(this.user);
-    this.userService.update(this.user.userId, this.user);
+    //this.userService.update(this.user.userId, this.user);
+    this.userService.submitQuiz(this.user);
     this.router.navigate(['/']);
   }
 

@@ -5,10 +5,10 @@
 </div>
 
 <div class="row">
-    <div class="col">Выдан: {{quiz?.assignedTime | date: 'medium'}}</div>
-    <div class="col">Начат: {{quiz?.startTime | date: 'medium'}}</div>
-    <div class="col">Начат: {{quiz?.endTime | date: 'medium'}}</div>
-    <div class="col">Выполнен за {{executionTime}} минут</div>
+    <div class="col">Выдано: {{quiz?.assignedTime | date: 'medium'}}</div>
+    <div class="col">Начато: {{quiz?.startTime | date: 'medium'}}</div>
+    <div class="col">Закончено: {{quiz?.endTime | date: 'medium'}}</div>
+    <div class="col">Выполнено за {{executionTime}} минут</div>
 </div>
 
 <ng-container *ngIf = "imageUrl">

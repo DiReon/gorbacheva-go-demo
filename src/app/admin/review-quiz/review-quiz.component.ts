@@ -49,6 +49,7 @@ export class ReviewQuizComponent implements OnInit {
     console.log("Setting as reviewed: ");
     console.table(this.student);
     this.userService.update(this.studentId, this.student);
+    
     this.router.navigate([`/admin/groups/${this.student.group}`]);
   }
 

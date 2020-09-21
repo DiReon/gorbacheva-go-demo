@@ -1,10 +1,14 @@
 <h3 *ngIf = "appUser$ | async as user">Здравствуйте, {{user.userName}}</h3>
 
-<div class="row">
-    <div class="col">
-        <a routerLink = "/admin/quizzes" class="btn btn-info">Задания</a>
-    </div>
-    <div class="col">
-        <a routerLink = "/admin/groups" class="btn btn-primary">Классы</a>
-    </div>
-</div>
+<h3>Новости:</h3>
+
+<ul *ngIf = "appEvents$ | async as appEvents" class="list-group">
+    <li *ngFor = "let appEvent of appEvents | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize" class="list-group-item">
+        {{ appEvent.userName }} {{ appEvent.content }} {{appEvent.time | date: "medium"}}
+    </li>
+</ul>
+<ngb-pagination
+  [(page)]="page"
+  [pageSize]="pageSize"
+  [collectionSize]="30">
+</ngb-pagination>

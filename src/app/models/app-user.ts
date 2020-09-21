@@ -2,7 +2,7 @@ import { Quiz } from './quiz';
 
 export class AppUser {
     userId: string;
-    name: string;
+    userName: string;
     email: string;
     photoUrl: string;
     group: string;
