@@ -6,7 +6,9 @@ export class AppUser {
     email: string;
     photoUrl: string;
     group: string;
-    quizzes: Quiz[];
+    quizzes: {
+        quiz: Quiz
+    };
     isAdmin: boolean;
 
     constructor(init?: Partial<AppUser>) {

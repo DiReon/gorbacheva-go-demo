@@ -48,8 +48,7 @@ export class ReviewQuizComponent implements OnInit {
     this.quiz.isReviewed = true;
     console.log("Setting as reviewed: ");
     console.table(this.student);
-    this.userService.update(this.studentId, this.student);
-    
+    this.userService.markReviewed(this.studentId, this.quizId, this.quiz.category);
     this.router.navigate([`/admin/groups/${this.student.group}`]);
   }
 

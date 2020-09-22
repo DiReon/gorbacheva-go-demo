@@ -2,6 +2,10 @@
 
 <a [routerLink] = "['/admin/groups/', group, 'quizzes']" class="btn btn-primary">Задать</a>
 <button (click) = "cancelAllQuizzes(group)" class="btn btn-danger ml-3">Отменить все задания</button>
+
+
+
+
 <ul class="list-group">
     <li *ngFor = "let student of students" class="list-group-item">
         <div class="row">

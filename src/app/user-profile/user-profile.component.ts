@@ -31,7 +31,7 @@ export class UserProfileComponent implements OnInit {
 
   save(value) {
     console.log("Form value: ", value);
-    this.userService.update(this.appUser.userId, value);
+    this.userService.updateUserProfile(this.appUser.userId, value);
 
     this.router.navigate(['/'])
   }

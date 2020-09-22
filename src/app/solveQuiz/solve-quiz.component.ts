@@ -68,7 +68,7 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
     console.log('Submitting for review: ');
     console.table(this.user);
     //this.userService.update(this.user.userId, this.user);
-    this.userService.submitQuiz(this.user);
+    this.userService.submitQuiz(this.user.userId, this.quiz, this.user.userName);
     this.router.navigate(['/']);
   }
 
