@@ -26,13 +26,6 @@ export class UserService {
   this.eventService.recordEvent(user.displayName, `зарегистрировался`)
   }
 
-  // update(userId: string, user: AppUser) {
-  //   console.log('Updating user: ');
-  //   console.table(user);
-  //   this.db.object('/users/' + userId).update(user);
-  //   this.eventService.recordEvent(user.userName, `обновил данные`);
-  // }
-
   updateUserProfile(userId: string, profileData) {
     console.log('Updating user: ');
     console.table(userId);
@@ -40,20 +33,20 @@ export class UserService {
     this.eventService.recordEvent(profileData['userName'], `обновил свой профиль`);
   }
 
-  submitQuiz(userId: string, quiz, userName) {
+  submitQuiz(userId: string, quiz: Quiz, userName: string) {
     console.log('Submitting quiz:');
     console.table(quiz);
-    this.db.object(`/users/${userId}/quizzes/${quiz.category}/${quiz.quizId}`).update(quiz);
+    this.db.object(`/users/${userId}/quizzes/${quiz.quizKey}`).update(quiz);
     this.eventService.recordEvent(userName, `отправил на проверку задание "${quiz.title}"`);
   }
 
   reviewQuiz(user: AppUser) {
     this.db.list(`/users/${user.userId}`).update('quizzes', user.quizzes);
-    this.eventService.recordEvent('', `проверено задание ${user.quizzes[user.quizzes.length-1].title}, которое отправил ${user.userName}"`)
+    // this.eventService.recordEvent('', `проверено задание ${user.quizzes[user.quizzes.length-1].title}, которое отправил ${user.userName}"`)
   }
 
-  markReviewed(studentId, quizId, category) {
-    this.db.object(`/users/${studentId}/quizzes/${category}/${quizId}`).update({isReviewed: true})
+  markReviewed(studentId: string, quizKey: string) {
+    this.db.object(`/users/${studentId}/quizzes/${quizKey}`).update({isReviewed: true})
   }
 
   delete(userId) {
@@ -104,7 +97,7 @@ export class UserService {
     let time = new Date().getTime();
     let randomUrl = Math.floor(Math.random() * quiz.imageUrls.length);
     let randomQuiz = {assignedTime: time, title: quiz.title, quizId: quiz.quizId, quizUrl: quiz.imageUrls[randomUrl] }
-    this.db.list(`/users/${studentId}/quizzes/${quiz.category}`).push(randomQuiz);
+    this.db.list(`/users/${studentId}/quizzes`).push(randomQuiz);
   }
 
   cancelQuiz(userId, quizId) {
@@ -118,35 +111,32 @@ export class UserService {
     this.eventService.recordEvent('', 'Все задания отменены')
   }
 
-  startQuiz(user: AppUser, quizId, quiz: Quiz) {
-    this.db.object(`/users/${user.userId}/quizzes/${quiz.category}/${quizId}`).update(
+  startQuiz(userId: string, quizId: string, startTime) {
+    this.db.object(`/users/${userId}/quizzes/${quizId}`).update(
       {
         isStarted: true,
-        startTime: quiz.startTime
+        startTime: startTime
       }
     )
-    //this.eventService.recordEvent(user.userName, `начал выполнять задание "${quiz.title}"`)
   }
 
   assignDemoQuizzes(userId) {
     this.db.object(`/users/${userId}`).update({
       quizzes: {
-        algebra: {
-          dummyId0: {
-            assignedTime: 1599998129433,
-            quizId: 'M9dvE9abhCbuAUFZWwV',
-            quizUrl: "https://firebasestorage.googleapis.com/v0/b/gorbacheva-go.appspot.com/o/quizzes%2F%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D0%B0%2F%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%8B%2F1.PNG?alt=media&token=e005d4c3-0da1-465b-a2c5-735e625d5daf",
-            title: 'Логарифмы',
-            timeLimit: 40,
-          },
-          dummyId1: {
-            assignedTime: 1599998129433,
-            quizId: 'M9dvMNUDhPdw271pzdi',
-            quizUrl: "https://firebasestorage.googleapis.com/v0/b/gorbacheva-go.appspot.com/o/quizzes%2F%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D0%B0%2F%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20%D1%83%D1%80%D0%B0%D0%B2%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9%2F0.PNG?alt=media&token=4107e9f3-64c9-48c7-aa1c-56d23c02f5e1",
-            title: 'Системы уравнений',
-            timeLimit: 40,
-          },
-        }
+        dummyId0: {
+          assignedTime: 1599998129433,
+          quizId: 'M9dvE9abhCbuAUFZWwV',
+          quizUrl: "https://firebasestorage.googleapis.com/v0/b/gorbacheva-go.appspot.com/o/quizzes%2F%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D0%B0%2F%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%8B%2F1.PNG?alt=media&token=e005d4c3-0da1-465b-a2c5-735e625d5daf",
+          title: 'Логарифмы',
+          timeLimit: 40,
+        },
+        dummyId1: {
+          assignedTime: 1599998129433,
+          quizId: 'M9dvMNUDhPdw271pzdi',
+          quizUrl: "https://firebasestorage.googleapis.com/v0/b/gorbacheva-go.appspot.com/o/quizzes%2F%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D0%B0%2F%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20%D1%83%D1%80%D0%B0%D0%B2%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9%2F0.PNG?alt=media&token=4107e9f3-64c9-48c7-aa1c-56d23c02f5e1",
+          title: 'Системы уравнений',
+          timeLimit: 40,
+        },
       }
     })
     console.log(`Assigned demo quizzes for user ${userId}`);

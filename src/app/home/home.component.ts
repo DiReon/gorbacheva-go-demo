@@ -31,12 +31,9 @@ export class HomeComponent implements OnInit {
         if (user.isAdmin) this.router.navigate(['/admin']);
         if (!user.group&&!user.isAdmin) this.router.navigate(['/user-profile'])
       }
-      if (this.appUser.quizzes) { 
-        this.assignedQuizzes = this.appUser.quizzes.filter(q => !q.isSubmitted);
-        console.log(`Assigned Quizzes: ${this.assignedQuizzes}`);
-        this.submittedQuizzes = this.appUser.quizzes.filter(q => q.isSubmitted);
-        this.reviewedQuizzes  =this.appUser.quizzes.filter(q => q.isReviewed);
-      }
+
+      if (this.appUser.quizzes) 
+        [this.assignedQuizzes, this.submittedQuizzes, this.reviewedQuizzes] = this.appUser.quizzesArr;
     })
   }
 

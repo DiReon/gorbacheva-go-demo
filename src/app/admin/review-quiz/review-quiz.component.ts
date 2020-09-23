@@ -11,7 +11,7 @@ import { UserService } from 'src/app/user.service';
   styleUrls: ['./review-quiz.component.css']
 })
 export class ReviewQuizComponent implements OnInit {
-  quizId: string;
+  quizKey: string;
   quiz: Quiz;
   answerUrls: string[];
   imageUrl: string;
@@ -26,12 +26,12 @@ export class ReviewQuizComponent implements OnInit {
     private router: Router,
     private userService: UserService
   ) {
-    this.quizId = this.route.snapshot.params.id;
+    this.quizKey = this.route.snapshot.params.quizKey;
     this.studentId = this.route.snapshot.params.student;
     if (this.studentId) {
       this.subscription = this.userService.get(this.studentId).valueChanges().subscribe(u => {
         this.student = u;
-        this.quiz = this.student.quizzes.filter(q => q.quizId == this.quizId)[0];
+        this.quiz = this.student.quizzes[this.quizKey];
         this.answerUrls = this.quiz.answerUrls;
         this.imageUrl = this.quiz.quizUrl;
         this.executionTime = Math.round((this.quiz.endTime - this.quiz.startTime)/60000);
@@ -44,11 +44,10 @@ export class ReviewQuizComponent implements OnInit {
   }
     
   markReviewed() {
-    console.table(this.student);
     this.quiz.isReviewed = true;
     console.log("Setting as reviewed: ");
     console.table(this.student);
-    this.userService.markReviewed(this.studentId, this.quizId, this.quiz.category);
+    this.userService.markReviewed(this.studentId, this.quizKey);
     this.router.navigate([`/admin/groups/${this.student.group}`]);
   }
 

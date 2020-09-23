@@ -12,12 +12,12 @@
 </div>
 
 <ng-container *ngIf = "imageUrl">
-    <h4 class="text-center">Условие:</h4>
+    <h1 class="text-center">Условие:</h1>
     <img [src]="imageUrl" alt="Фото условия" class="col">
 </ng-container>
 
 <ng-container *ngIf = "answerUrls">
-    <h4 class="text-center">Решение:</h4>
+    <h1 class="text-center">Решение:</h1>
     <div *ngFor = "let url of answerUrls" class="row m-2">
         <img [src]="url" alt="Фото решения" class="col">
     </div>

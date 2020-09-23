@@ -12,4 +12,5 @@ export interface Quiz {
     isSubmitted: boolean,
     isReviewed: boolean,
     isStarted: boolean,
+    quizKey: string;
 }

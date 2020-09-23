@@ -3,7 +3,7 @@
 <ul class="list-group">Задания для выполнения: 
     <div *ngIf = "!assignedQuizzes?.length">отсутствуют</div>
     <li *ngFor = "let quiz of assignedQuizzes" class="list-group-item">
-        <a [routerLink] = "['quiz/', quiz?.quizId]">Quiz: {{quiz?.title}}</a>
+        <a [routerLink] = "['quiz/', quiz?.quizKey]">Quiz: {{quiz?.title}}</a>
     </li>
 </ul>
 <ul class="list-group">На проверке:

@@ -3,34 +3,33 @@
 <a [routerLink] = "['/admin/groups/', group, 'quizzes']" class="btn btn-primary">Задать</a>
 <button (click) = "cancelAllQuizzes(group)" class="btn btn-danger ml-3">Отменить все задания</button>
 
-
-
-
 <ul class="list-group">
     <li *ngFor = "let student of students" class="list-group-item">
         <div class="row">
             <div class="col">
                 {{ student.userName }}
             </div>
-            <div *ngIf = "student.quizzes" class="col">На выполнении:
+            <div *ngIf = "student.quizzesArr" class="col">На выполнении:
                 <ul class="list-group">
-                    <ng-container *ngFor = "let quiz of student.quizzes">
-                        <li *ngIf = "!quiz.isSubmitted" class="list-group-item">
+                    <ng-container *ngIf = "student.quizzesArr[0]">
+                        <li *ngFor = "let quiz of student.quizzesArr[0]" class="list-group-item">
                             {{quiz.title}}
                         </li>
                     </ng-container>
                 </ul>
             </div>
-            <div *ngIf = "student.quizzes" class="col">На проверке:
+            <div *ngIf = "student.quizzesArr" class="col">На проверке:
                 <ul class="list-group">
-                    <ng-container *ngFor = "let quiz of student.quizzes">
-                        <a [routerLink] = "['/admin/', student.userId, quiz.quizId ]">
-                            <li *ngIf = "quiz.isSubmitted && (!quiz.isReviewed)" class="list-group-item">{{quiz.title}}</li>
-                        </a>
+                    <ng-container *ngIf = "student.quizzesArr[1]">
+                        <li *ngFor = "let quiz of student.quizzesArr[1]" class="list-group-item">
+                            <a [routerLink] = "['/admin/', student.userId, quiz.quizKey]">
+                                {{quiz.title}}
+                            </a>
+                        </li>
                     </ng-container>
                 </ul>
             </div>
-            <div *ngIf = "student.quizzes" class="col">
+            <div *ngIf = "student.quizzesArr" class="col">
                 <a [routerLink] = "['/admin/reviewed/', student.userId]">Проверенные</a>
             </div>
         </div>

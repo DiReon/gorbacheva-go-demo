@@ -14,7 +14,7 @@ import { map, take } from 'rxjs/operators';
 })
 export class SolveQuizComponent implements OnInit, OnDestroy {
   user: AppUser;
-  quizId: string;
+  quizKey: string;
   quiz: Quiz;
   quizzes: Quiz[];
   timeLimit: number;
@@ -28,22 +28,22 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
   ) {
-    this.quizId = this.route.snapshot.params.id;
+    this.quizKey = this.route.snapshot.params.quizKey;
     this.subscription = this.authService.appUser$.subscribe(u => {
       this.user = new AppUser(u);
       console.table(this.user);
       if (this.user.quizzes) {
-        this.quiz = this.user.quizzes.filter(q => q.quizId == this.quizId)[0];
-        let quizIndex = this.user.quizzes.indexOf(this.quiz);
+        this.quiz = this.user.quizzes[this.quizKey];
+        this.quiz.quizKey = this.quizKey;
         this.imageUrl = this.quiz.quizUrl;
         this.timeLimit = this.quiz.timeLimit;
         if (!this.quiz.startTime) this.quiz.startTime = new Date().getTime();
         console.log(`Start time: ${this.quiz.startTime}`);
         this.isLoaded = true;
         this.quiz.isStarted = true;
-        this.userService.startQuiz(this.user, quizIndex, this.quiz);
+        this.userService.startQuiz(this.user.userId, this.quizKey, this.quiz.startTime);
         this.count = this.quiz.timeLimit + 1 - Math.round((new Date().getTime() - this.quiz.startTime)/60000);
         console.log("Count: ", this.count);
         
@@ -67,7 +67,6 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
     this.quiz.isSubmitted = true;
     console.log('Submitting for review: ');
     console.table(this.user);
-    //this.userService.update(this.user.userId, this.user);
     this.userService.submitQuiz(this.user.userId, this.quiz, this.user.userName);
     this.router.navigate(['/']);
   }

@@ -18,7 +18,7 @@ export class ReviewedQuizzesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {
     this.studentId = this.route.snapshot.params.student;
-    this.subscription = this.userService.get(this.studentId).valueChanges().subscribe(u => this.student = u);
+    this.subscription = this.userService.get(this.studentId).valueChanges().subscribe(u => this.student = new AppUser(u));
   }
   ngOnInit(): void {
   }
