@@ -23,6 +23,7 @@ export class AdminQuizzesComponent implements OnInit, OnDestroy {
   ColumnMode = ColumnMode;  
   group: string;
   category: string;
+  studentId: string;
   students: AppUser[] = [];
   constructor(
     private quizService: QuizService,
@@ -32,7 +33,8 @@ export class AdminQuizzesComponent implements OnInit, OnDestroy {
     ) { 
     this.group = this.route.snapshot.params.group
     this.category = this.route.snapshot.params.category;
-    console.log(`Category: ${this.category}`);
+    this.studentId = this.route.snapshot.params.studentId; 
+    console.log(`Category: ${this.category}, Group: ${this.group}, StudentId: ${this.studentId}`);
     if (this.category) this.subscription = this.quizService.getQuizzesForCategory(this.category).subscribe(response => this.rows = this.temp = response)
     else this.subscription = this.quizService.getAll().subscribe(response => this.rows = this.temp = response)
   }
@@ -54,9 +56,11 @@ export class AdminQuizzesComponent implements OnInit, OnDestroy {
     let quiz = this.temp.filter(q => q['key'] == quizId)[0];
     quiz.quizId = quizId;
     quiz.category = quiz.category;
-    this.userService.assignQuizToGroup(this.group, quiz);
+    if (!this.studentId) this.userService.assignQuizToGroup(this.group, quiz);
+    else this.userService.assignQuiz(this.studentId, quiz);
     this.router.navigate(['/admin/groups/'], {queryParams: {group: this.group, category: this.category}});
   }
+
 }
 
 

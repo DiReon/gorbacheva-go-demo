@@ -5,6 +5,7 @@ import { CategoryService } from '../category.service';
 import { AppUser } from '../models/app-user';
 import { UserService } from '../user.service';
 import { ActivatedRoute } from '@angular/router';
+import { Quiz } from '../models/quiz';
 
 @Component({
   selector: 'app-admin-groups',
@@ -47,6 +48,10 @@ export class AdminGroupsComponent implements OnInit, OnDestroy {
   cancelAllQuizzes(group) {
     this.userService.cancelAllQuizzes(group);
     console.log(`Cancelled all quizzes for ${group}`);
+  }
+
+  cancel(student: AppUser, quiz: Quiz) {
+    this.userService.cancelQuiz(student.userId, quiz.quizKey);
   }
 
   ngOnDestroy() {

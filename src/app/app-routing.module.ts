@@ -28,6 +28,7 @@ const routes: Routes = [
 
   
   
+  {path: 'admin/groups/:group/:studentId/:category', component: AdminQuizzesComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/groups/:group/:category', component: AdminQuizzesComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/groups', component: AdminGroupsComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/reviewed/:student', component: ReviewedQuizzesComponent, canActivate: [AdminAuthGuard]},

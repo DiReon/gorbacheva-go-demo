@@ -93,8 +93,9 @@ export class UserService {
     this.db.list(`/users/${studentId}/quizzes`).push(randomQuiz);
   }
 
-  cancelQuiz(userId, quizId) {
-    this.db.object('/users/' + userId + '/quizzes' + quizId).remove();
+  cancelQuiz(userId, quizKey) {
+    this.db.object(`/users/${userId}/quizzes/${quizKey}`).remove();
+    console.log(`Cancelled quiz ${quizKey} of user ${userId}`);
     this.eventService.recordEvent('', `Задание пользователя ${userId} отменено`)
   }
 
