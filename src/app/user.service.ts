@@ -45,8 +45,8 @@ export class UserService {
     // this.eventService.recordEvent('', `проверено задание ${user.quizzes[user.quizzes.length-1].title}, которое отправил ${user.userName}"`)
   }
 
-  markReviewed(studentId: string, quizKey: string) {
-    this.db.object(`/users/${studentId}/quizzes/${quizKey}`).update({isReviewed: true})
+  toggleReviewed(studentId: string, quizKey: string, isReviewed) {
+    this.db.object(`/users/${studentId}/quizzes/${quizKey}`).update({isReviewed: isReviewed})
   }
 
   delete(userId) {
@@ -69,34 +69,27 @@ export class UserService {
     return this.listRef.valueChanges();
   }
 
-  // assignQuizToGroupOld(group: string, quiz: Quiz) {
-  //   console.log(`Assigning quiz ${quiz.title} to a group ${group}...`);
-    
-  //   this.getGroup(group).pipe(take(1)).subscribe(users => {
-  //     users.forEach(s => {
-  //       let time = new Date().getTime();
-  //       let randomQuiz;
-  //       let randomUrl = Math.floor(Math.random() * quiz.imageUrls.length);
-  //       randomQuiz = {assignedTime: time, title: quiz.title, quizId: quiz.quizId, quizUrl: quiz.imageUrls[randomUrl] }
-  //       console.log(`s.quizzes: ${s.quizzes}`);
-        
-  //       s.quizzes ? s.quizzes.push(randomQuiz) : s.quizzes = [randomQuiz];
-  //       this.db.list('/users/' + s.userId).update('quizzes', s.quizzes)
-  //     })
-  //   })
-  //   this.eventService.recordEvent(group, `получил задание "${quiz.title}"`);
-  // }
-
   assignQuizToGroup(group: string, quiz: Quiz) {
     this.getGroup(group).pipe(take(1)).subscribe(students => {
-      students.forEach(s => this.assignQuiz(s.userId, quiz))
+      for (let s in students) {
+        console.log(`Assigning quiz to student ${students[s].userName}`);
+        
+        this.assignQuiz(students[s].userId, quiz)
+      }
     })
+    this.eventService.recordEvent('', `Выдано задание на выполнение ${group} классу`)
   }
 
   assignQuiz(studentId: string, quiz: Quiz) {
     let time = new Date().getTime();
     let randomUrl = Math.floor(Math.random() * quiz.imageUrls.length);
-    let randomQuiz = {assignedTime: time, title: quiz.title, quizId: quiz.quizId, quizUrl: quiz.imageUrls[randomUrl] }
+    let randomQuiz = {
+      assignedTime: time, 
+      title: quiz.title, 
+      quizId: quiz.quizId, 
+      quizUrl: quiz.imageUrls[randomUrl], 
+      category: quiz.category
+    }
     this.db.list(`/users/${studentId}/quizzes`).push(randomQuiz);
   }
 
@@ -108,7 +101,6 @@ export class UserService {
   cancelUserQuizzes(userId) {
     this.db.list('/users/' + userId + '/quizzes').remove();
     console.log(`Cancelled all quizzes of user ${userId}`);
-    this.eventService.recordEvent('', 'Все задания отменены')
   }
 
   startQuiz(userId: string, quizId: string, startTime) {
@@ -129,6 +121,7 @@ export class UserService {
           quizUrl: "https://firebasestorage.googleapis.com/v0/b/gorbacheva-go.appspot.com/o/quizzes%2F%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D0%B0%2F%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%8B%2F1.PNG?alt=media&token=e005d4c3-0da1-465b-a2c5-735e625d5daf",
           title: 'Логарифмы',
           timeLimit: 40,
+          category: 'Алгебра'
         },
         dummyId1: {
           assignedTime: 1599998129433,
@@ -136,6 +129,7 @@ export class UserService {
           quizUrl: "https://firebasestorage.googleapis.com/v0/b/gorbacheva-go.appspot.com/o/quizzes%2F%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D0%B0%2F%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20%D1%83%D1%80%D0%B0%D0%B2%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9%2F0.PNG?alt=media&token=4107e9f3-64c9-48c7-aa1c-56d23c02f5e1",
           title: 'Системы уравнений',
           timeLimit: 40,
+          category: 'Алгебра'
         },
       }
     })
@@ -145,7 +139,7 @@ export class UserService {
 
   cancelAllQuizzes(group) {
     this.getGroup(group).subscribe(users => {
-      users.forEach(s => this.db.list('/users/' + s.userId + '/quizzes').remove())
+      users.forEach(s => this.cancelUserQuizzes(s.userId))
     })
     this.eventService.recordEvent('', `Все задания в ${group} классе отменены`)
   }

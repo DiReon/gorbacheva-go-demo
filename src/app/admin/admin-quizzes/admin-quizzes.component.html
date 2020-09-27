@@ -23,10 +23,10 @@
   </ngx-datatable-column>
   <ngx-datatable-column  name="Действия" prop = "key">
     <ng-template let-row="row" ngx-datatable-cell-template>
-      <a *ngIf = "!groupId" [routerLink]="['/admin/quizzes/', row.key]">
+      <a *ngIf = "!group" [routerLink]="['/admin/quizzes/', row.key]">
         <fa-icon [icon]="icon" size="2x"></fa-icon>
       </a>
-      <a *ngIf = "groupId" (click) = "assignQuiz(row.key)" class="btn btn-primary">
+      <a *ngIf = "group" (click) = "assignQuiz(row.key)" class="btn btn-primary">
         Задать
       </a>
     </ng-template>

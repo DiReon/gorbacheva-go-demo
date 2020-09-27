@@ -23,4 +23,7 @@
     </div>
 </ng-container>
 
-<button (click) = "markReviewed()" class="btn btn-primary">Проверено</button>
+<button (click) = "toggleReviewed()" class="btn btn-primary">
+    <ng-container *ngIf="!quiz?.isReviewed; else reviewed">Проверено</ng-container>
+    <ng-template #reviewed>Не проверено</ng-template>
+</button>

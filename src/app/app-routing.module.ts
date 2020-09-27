@@ -9,7 +9,6 @@ import { AuthGuard } from './auth-guard.service';
 import { AdminAuthGuard } from './admin-auth-guard.service';
 import { AdminComponent } from './admin/admin/admin.component';
 import { AdminGroupsComponent } from './admin-groups/admin-groups.component';
-import { GroupComponent } from './group/group.component';
 import { RegisterComponent } from './register/register.component';
 import { ReviewQuizComponent } from './admin/review-quiz/review-quiz.component';
 import { SolveQuizComponent } from './solveQuiz/solve-quiz.component';
@@ -29,8 +28,7 @@ const routes: Routes = [
 
   
   
-  {path: 'admin/groups/:group/quizzes', component: AdminQuizzesComponent, canActivate: [AdminAuthGuard]},
-  {path: 'admin/groups/:id', component: GroupComponent, canActivate: [AdminAuthGuard]},
+  {path: 'admin/groups/:group/:category', component: AdminQuizzesComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/groups', component: AdminGroupsComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/reviewed/:student', component: ReviewedQuizzesComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/:student/:quizKey', component: ReviewQuizComponent, canActivate: [AdminAuthGuard]},

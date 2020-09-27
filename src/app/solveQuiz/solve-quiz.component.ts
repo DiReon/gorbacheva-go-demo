@@ -65,6 +65,7 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
     this.quiz.endTime =  new Date().getTime();
     console.log(`End time: ${this.quiz.endTime}`);
     this.quiz.isSubmitted = true;
+    this.quiz.isReviewed = false;
     console.log('Submitting for review: ');
     console.table(this.user);
     this.userService.submitQuiz(this.user.userId, this.quiz, this.user.userName);

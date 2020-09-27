@@ -8,9 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/user.service';
 import { AppUser } from 'src/app/models/app-user';
 import { Quiz } from 'src/app/models/quiz';
-import { take, finalize } from 'rxjs/operators';
-import { GroupService } from 'src/app/group.service';
-import { Group } from 'src/app/models/group';
 
 @Component({
   selector: 'app-admin-quizzes',
@@ -24,18 +21,20 @@ export class AdminQuizzesComponent implements OnInit, OnDestroy {
   rowsRef: AngularFireList<any>;
   temp: Quiz[] = [];
   ColumnMode = ColumnMode;  
-  groupId: string;
-  group: Group;
+  group: string;
+  category: string;
   students: AppUser[] = [];
   constructor(
-    private quizServise: QuizService,
+    private quizService: QuizService,
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
     ) { 
-    this.groupId = this.route.snapshot.params.group
-    this.subscription = this.quizServise.getAll()
-      .subscribe(response => this.rows = this.temp = response)
+    this.group = this.route.snapshot.params.group
+    this.category = this.route.snapshot.params.category;
+    console.log(`Category: ${this.category}`);
+    if (this.category) this.subscription = this.quizService.getQuizzesForCategory(this.category).subscribe(response => this.rows = this.temp = response)
+    else this.subscription = this.quizService.getAll().subscribe(response => this.rows = this.temp = response)
   }
 
   ngOnInit(): void {
@@ -54,10 +53,10 @@ export class AdminQuizzesComponent implements OnInit, OnDestroy {
   assignQuiz(quizId: string) {
     let quiz = this.temp.filter(q => q['key'] == quizId)[0];
     quiz.quizId = quizId;
-    this.userService.assignQuizToGroup(this.groupId, quiz);
-    this.router.navigate(['/admin/groups/', this.groupId]);
+    quiz.category = quiz.category;
+    this.userService.assignQuizToGroup(this.group, quiz);
+    this.router.navigate(['/admin/groups/'], {queryParams: {group: this.group, category: this.category}});
   }
-  
 }
 
 

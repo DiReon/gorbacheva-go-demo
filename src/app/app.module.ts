@@ -18,7 +18,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
 import { AdminGroupsComponent } from './admin-groups/admin-groups.component';
-import { GroupComponent } from './group/group.component';
 import { UploadFilesComponent } from './shared/upload-files/upload-files.component';
 import { RegisterComponent } from './register/register.component';
 import { ReviewQuizComponent } from './admin/review-quiz/review-quiz.component';
@@ -38,7 +37,6 @@ import { ReviewedQuizzesComponent } from './admin/reviewed-quizzes/reviewed-quiz
     AdminComponent,
     BsNavbarComponent,
     AdminGroupsComponent,
-    GroupComponent,
     UploadFilesComponent,
     RegisterComponent,
     ReviewQuizComponent,

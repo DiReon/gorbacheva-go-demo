@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Quiz } from './models/quiz';
 
@@ -12,6 +13,13 @@ export class QuizService {
 
   getAll() {
     this.listRef = this.db.list('/quizzes')
+    return this.listRef.snapshotChanges().pipe(
+      map(changes => 
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))));
+  }
+
+  getQuizzesForCategory(category: string) {
+    this.listRef = this.db.list('/quizzes', ref => ref.orderByChild('category').equalTo(category))
     return this.listRef.snapshotChanges().pipe(
       map(changes => 
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))));

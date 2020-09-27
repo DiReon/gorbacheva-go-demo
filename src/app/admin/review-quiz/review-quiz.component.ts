@@ -43,11 +43,9 @@ export class ReviewQuizComponent implements OnInit {
   ngOnInit(): void {
   }
     
-  markReviewed() {
-    this.quiz.isReviewed = true;
-    console.log("Setting as reviewed: ");
-    console.table(this.student);
-    this.userService.markReviewed(this.studentId, this.quizKey);
+  toggleReviewed() {
+    this.quiz.isReviewed = !this.quiz.isReviewed; 
+    this.userService.toggleReviewed(this.studentId, this.quizKey, this.quiz.isReviewed);
     this.router.navigate([`/admin/groups/${this.student.group}`]);
   }
 
