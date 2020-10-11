@@ -6,6 +6,8 @@ import { AppUser } from '../models/app-user';
 import { UserService } from '../user.service';
 import { ActivatedRoute } from '@angular/router';
 import { Quiz } from '../models/quiz';
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-admin-groups',
@@ -13,6 +15,7 @@ import { Quiz } from '../models/quiz';
   styleUrls: ['./admin-groups.component.css']
 })
 export class AdminGroupsComponent implements OnInit, OnDestroy {
+  icon = faTimes;
   _group;
   _category;
   groupRef: string;

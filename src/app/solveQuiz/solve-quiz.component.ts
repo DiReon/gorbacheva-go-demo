@@ -49,7 +49,7 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
         
         this.counter$ = timer(0, 60000).pipe(
           take(this.count),
-          map(() => --this.count));  
+          map(() => this.count = this.count - 1));  
       }
     });
   };

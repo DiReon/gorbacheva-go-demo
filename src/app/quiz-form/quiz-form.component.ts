@@ -30,7 +30,9 @@ export class QuizFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onUploadFiles(urls) {
+  onUploadFiles(urls: string[]) {
+    console.log(`Urls from onUploadFiles:`);
+    console.table(urls);
     this.quiz.imageUrls = urls;
   }
 
@@ -39,9 +41,9 @@ export class QuizFormComponent implements OnInit {
     this.quiz.title = value.title;
     this.quiz.category = value.category;
     this.quiz.timeLimit = (value.timeLimit ? value.timeLimit : 43200);
-    if (this.quizId) this.quizService.update(this.quizId, this.quiz)
-    else this.quizService.create(value);
-    this.router.navigate(['/admin/quizzes'])
+    if (this.quizId) this.quizService.update(this.quizId, this.quiz);
+    else this.quizService.create(this.quiz);
+    this.router.navigate(['/admin/quizzes']);
   }
 
   
