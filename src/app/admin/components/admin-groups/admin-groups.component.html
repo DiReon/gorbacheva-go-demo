@@ -15,7 +15,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <button class="btn btn-success">Загрузить</button>
+            <button id = "loadBtn" class="btn btn-success">Загрузить</button>
         </div>
         <div class="col">
             <a [routerLink] = "['/admin/groups/', _group, _category]" class="btn btn-primary">Задать</a>
@@ -29,7 +29,7 @@
 <ul class="list-group">
     <li *ngFor = "let student of students" class="list-group-item">
         <div class="row">
-            <div class="col-3">
+            <div class="col-3 studentName">
                 {{ student.userName }}
                 <a [routerLink] = "['/admin/groups/', _group, student.userId, _category]" class="float-right">
                     Задать
@@ -39,7 +39,7 @@
                 <ul class="list-group list-group-horizontal">
                     <ng-container *ngIf = "student.quizzesArr[0]">
                         <ng-container *ngFor = "let quiz of student.quizzesArr[0]">
-                            <li *ngIf = "quiz.category == _category" class="list-group-item">
+                            <li *ngIf = "quiz.category == _category" class="list-group-item assigned-quizzes">
                                 {{quiz.title}}
                                 <a (click) = "cancel(student, quiz)" class="link" style="color: red; cursor: pointer">
                                     <fa-icon [icon]="icon" size="1x"></fa-icon>
@@ -47,7 +47,7 @@
                             </li>
                         </ng-container>
                         <ng-container *ngIf = "student.quizzesArr[1]">
-                            <li *ngFor = "let quiz of student.quizzesArr[1]" class="list-group-item">
+                            <li *ngFor = "let quiz of student.quizzesArr[1]" class="list-group-item submitted-quizzes">
                                 <a *ngIf = "quiz.category == _category" [routerLink] = "['/admin/', student.userId, quiz.quizKey]">
                                     {{quiz.title}}
                                 </a>
@@ -57,7 +57,7 @@
                 </ul>
             </div>
             <div *ngIf = "student.quizzesArr" class="col">
-                <a [routerLink] = "['/admin/reviewed/', student.userId]">Проверенные</a>
+                <a [routerLink] = "['/admin/reviewed/', student.userId]" class="reviewed-quizzes">Проверенные</a>
             </div>
         </div>
     </li>

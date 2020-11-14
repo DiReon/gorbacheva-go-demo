@@ -15,7 +15,7 @@ import { SolveQuizComponent } from './student/components/solveQuiz/solve-quiz.co
 import { ReviewedQuizzesComponent } from './admin/components/reviewed-quizzes/reviewed-quizzes.component';
 
 
-const routes: Routes = [
+export const routes: Routes = [
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
@@ -25,8 +25,6 @@ const routes: Routes = [
   {path: 'admin/quizzes/new', component: QuizFormComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/quizzes/:id', component: QuizFormComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/quizzes', component: AdminQuizzesComponent, canActivate: [AdminAuthGuard]},
-
-  
   
   {path: 'admin/groups/:group/:studentId/:category', component: AdminQuizzesComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/groups/:group/:category', component: AdminQuizzesComponent, canActivate: [AdminAuthGuard]},

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,8 @@ export class GroupService {
   constructor(private db: AngularFireDatabase) { }
 
   getAll() {
-    return this.db.list('/groups');
+    let ref: AngularFireList<any> = this.db.list('/groups');
+    return ref.valueChanges();
   }
 
   get(group) {

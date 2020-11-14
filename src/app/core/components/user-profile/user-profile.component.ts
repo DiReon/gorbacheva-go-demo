@@ -22,7 +22,7 @@ export class UserProfileComponent implements OnInit {
     private userService: UserService,
     private router: Router
   ) { 
-    this.groups$ = this.groupService.getAll().valueChanges();
+    this.groups$ = this.groupService.getAll();
     this.authService.appUser$.pipe(take(1)).subscribe(u => this.appUser = u)
   }
 

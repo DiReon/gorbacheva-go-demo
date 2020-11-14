@@ -32,16 +32,23 @@ export class AdminGroupsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { 
     this._group = this.route.snapshot.queryParamMap.get('group') || '/'
+    console.log(this._group);
+    
     this._category = this.route.snapshot.queryParamMap.get('category') || '/'
-    this.groups$ = this.groupService.getAll().valueChanges();
+    console.log(`this._category = ${this._category}`);
+    
+    this.groups$ = this.groupService.getAll();
     this.categories$ = this.categoryService.getAll().valueChanges();
-    if (this._group && this._category) this.load({group: this._group})
+    if (this._group !='/' && this._category !='/') this.load({group: this._group})
   }
 
   ngOnInit(): void {
   }
 
+
   load(value) {
+    console.log("Run load");
+    
     this.subscription = this.userService.getGroup(value['group']).subscribe(users => {
       this.students = users.map(u => new AppUser(u))
       console.table(this.students);

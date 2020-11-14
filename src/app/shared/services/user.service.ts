@@ -54,9 +54,10 @@ export class UserService {
     this.eventService.recordEvent(userId, 'удален')
   }
 
-  get(userId: string): AngularFireObject<AppUser> {
+  get(userId: string): Observable<AppUser> {
     console.log("called userService.get(", userId, ")");
-    return this.db.object('/users/' + userId)
+    let ref: AngularFireObject<AppUser> = this.db.object('/users/' + userId);
+    return ref.valueChanges();
   }
 
   getAll() {

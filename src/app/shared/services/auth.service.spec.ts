@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { of } from 'rxjs';
 import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
 let mockUser = {name: "Mock User", id: "mockID"}
 
@@ -23,7 +24,8 @@ describe('AuthService', () => {
     TestBed.configureTestingModule({
       providers: [
         {provide: UserService, useValue: spy},
-        {provide: AngularFireAuth, useValue: afStub}
+        {provide: AngularFireAuth, useValue: afStub},
+        {provide: Router, useValue: null}
       ]
     });
     service = TestBed.inject(AuthService);

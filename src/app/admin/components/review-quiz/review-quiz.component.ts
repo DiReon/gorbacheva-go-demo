@@ -30,7 +30,7 @@ export class ReviewQuizComponent implements OnInit {
     this.quizKey = this.route.snapshot.params.quizKey;
     this.studentId = this.route.snapshot.params.student;
     if (this.studentId) {
-      this.subscription = this.userService.get(this.studentId).valueChanges().subscribe(u => {
+      this.subscription = this.userService.get(this.studentId).subscribe(u => {
         this.student = u;
         this.quiz = this.student.quizzes[this.quizKey];
         this.answerUrls = this.quiz.answerUrls;

@@ -1,22 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 import { LoginComponent } from './login.component';
-import { AuthService } from '../../../shared/services/auth.service';
 
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let spy = jasmine.createSpyObj('AuthService', ['login'])
-  // class mockAuthService {
-  //   login() {}
-  // }
-    
+  let authSpy = jasmine.createSpyObj('AuthService', ['login'])
+  let userSpy = jasmine.createSpyObj('UserService', ['cancelAllQuizzes'])
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      providers: [{provide: AuthService, useValue: spy}]
+      providers: [
+        {provide: AuthService, useValue: authSpy},
+        {provide: UserService, useValue: userSpy},
+      ],
+      imports: [
+        FormsModule
+      ]
     })
     .compileComponents();
   }));
@@ -33,6 +38,6 @@ describe('LoginComponent', () => {
 
   it('#login should call login method of authService', ()=>{
     component.login();
-    expect(spy.login).toHaveBeenCalledTimes(1);
+    expect(authSpy.login).toHaveBeenCalledTimes(1);
   })
 });

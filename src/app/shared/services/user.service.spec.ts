@@ -1,16 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-
-import { UserService } from './user.service';
-import { AngularFireAuth } from '@angular/fire/auth/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { of } from 'rxjs';
+
+import { EventService } from './event.service';
+import { UserService } from './user.service';
 
 class afStub {
   update(user) {}
 }
 
 let mockUser = {
-  name: "Mock User",
+  userName: "Mock User",
   userId: "mockID",
   email: "mock email",
   photoUrl: "mock photo url"
@@ -30,13 +29,15 @@ describe('UserService', () => {
   let afSpy = jasmine.createSpyObj('AngularFireDatabase', ['list', 'object']);
   let objectSpy = jasmine.createSpyObj('object', ['update', 'valueChanges']);
   afSpy.object.and.returnValue(objectSpy);
-  objectSpy.valueChanges.and.returnValue(of(mockUser))
+  objectSpy.valueChanges.and.returnValue(mockUser)
+  let eventSpy = jasmine.createSpyObj('EventService', ['recordEvent'])
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         // {provide: AngularFireDatabase, useClass: afStub }
-        {provide: AngularFireDatabase, useValue: afSpy }
+        {provide: AngularFireDatabase, useValue: afSpy },
+        {provide: EventService, useValue: eventSpy}
       ]
     });
     service = TestBed.inject(UserService);
@@ -51,9 +52,9 @@ describe('UserService', () => {
     expect(objectSpy.update).toHaveBeenCalledWith(mockUser)
   })
   it('#get should return user object from users list in Firebase', ()=>{
-    service.get(mockFireUser.uid);
+    service.get(mockUser.userId);
     expect(afSpy.object).toHaveBeenCalledWith(path + '/' + mockFireUser.uid);
     expect(objectSpy.valueChanges).toHaveBeenCalledTimes(1);
-    expect(objectSpy.valueChanges).toEqual(of(mockUser))
+    expect(objectSpy.valueChanges()).toEqual(mockUser);
   })
 });
