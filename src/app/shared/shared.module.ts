@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -33,6 +33,7 @@ import { UserService } from './services/user.service';
     AngularFireStorageModule,
     NgbModule,
     FontAwesomeModule,
+    ReactiveFormsModule,
   ],
   exports: [
     UploadFilesComponent,
@@ -45,6 +46,7 @@ import { UserService } from './services/user.service';
     AngularFireStorageModule,
     NgbModule,
     FontAwesomeModule,
+    ReactiveFormsModule,
   ],
   providers: [
     AuthGuard,

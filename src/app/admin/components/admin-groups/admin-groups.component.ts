@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
 import { AppUser } from 'src/app/shared/models/app-user';
@@ -29,7 +29,8 @@ export class AdminGroupsComponent implements OnInit, OnDestroy {
     private groupService: GroupService,
     private categoryService: CategoryService,
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
   ) { 
     this._group = this.route.snapshot.queryParamMap.get('group') || '/'
     console.log(this._group);
@@ -45,6 +46,10 @@ export class AdminGroupsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
+  onSubmit(value) {
+    this.router.navigate(['/admin/groups/'], {queryParams: {group: value['group'], category: value['category']}});
+    this.load(value);
+  }
 
   load(value) {
     console.log("Run load");

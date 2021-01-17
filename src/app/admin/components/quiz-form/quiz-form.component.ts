@@ -15,7 +15,7 @@ export class QuizFormComponent implements OnInit {
   quiz = {} as Quiz;
   quizId: string;
   categories$;
-  
+  uploadIsValid = true;
   constructor(
     private quizService: QuizService,
     private categoryService: CategoryService,
@@ -23,7 +23,9 @@ export class QuizFormComponent implements OnInit {
     private router: Router
   ) {
     this.quizId = this.route.snapshot.paramMap.get('id');
-    if (this.quizId) this.quizService.get(this.quizId).valueChanges().pipe(take(1)).subscribe(t => console.log(this.quiz = t));
+    if (this.quizId) this.quizService.get(this.quizId).valueChanges().pipe(take(1)).subscribe(
+      t => console.log(this.quiz = t)
+    );
     this.categories$ = this.categoryService.getAll().snapshotChanges();
   }
 
@@ -34,6 +36,12 @@ export class QuizFormComponent implements OnInit {
     console.log(`Urls from onUploadFiles:`);
     console.table(urls);
     this.quiz.imageUrls = urls;
+  }
+
+  uploadValidTrigger(value: boolean) {
+    console.log("Received ", value);
+    
+    this.uploadIsValid = value;
   }
 
   save(value) {
@@ -49,7 +57,7 @@ export class QuizFormComponent implements OnInit {
   delete() {
     if (!confirm('Точно хотите удалить тест?')) return;
     
-    this.quizService.delete(this.quizId);
+    this.quizService.delete(this.quizId, this.quiz.imageUrls);
     this.router.navigate(['/admin/quizzes']);
     
   }

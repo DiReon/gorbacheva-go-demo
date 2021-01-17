@@ -13,14 +13,14 @@ export class BsNavbarComponent implements OnInit, OnDestroy {
   appUser: AppUser;
   subscription: Subscription;
   constructor(private authService: AuthService) {
-    authService.appUser$.subscribe(u => {
-      this.appUser = u;
-      if (this.appUser) localStorage.setItem('appUser', this.appUser.userId)
-    });
     
   }
 
   ngOnInit(): void {
+    this.subscription = this.authService.appUser$.subscribe(u => {
+      this.appUser = u;
+    });
+  
   }
 
   logout() {

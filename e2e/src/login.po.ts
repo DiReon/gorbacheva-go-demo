@@ -12,5 +12,9 @@ export class AppPage {
   }
   getPageTitle() {
 		return browser.getTitle();
-	}
+  }
+  
+  getAdminHomeText(): Promise<string> {
+    return element(by.css('.greeting')).getText() as Promise<string>;
+  }
 }

@@ -21,6 +21,7 @@ export const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard]},
   {path: 'quiz/:quizKey', component: SolveQuizComponent, canActivate: [AuthGuard]},
+  {path: 'review/:student/:quizKey', component: ReviewQuizComponent, canActivate: [AuthGuard]},
 
   {path: 'admin/quizzes/new', component: QuizFormComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/quizzes/:id', component: QuizFormComponent, canActivate: [AdminAuthGuard]},
@@ -30,7 +31,6 @@ export const routes: Routes = [
   {path: 'admin/groups/:group/:category', component: AdminQuizzesComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/groups', component: AdminGroupsComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin/reviewed/:student', component: ReviewedQuizzesComponent, canActivate: [AdminAuthGuard]},
-  {path: 'admin/:student/:quizKey', component: ReviewQuizComponent, canActivate: [AdminAuthGuard]},
   {path: 'admin', component: AdminComponent, canActivate: [AdminAuthGuard]}
 ];
 

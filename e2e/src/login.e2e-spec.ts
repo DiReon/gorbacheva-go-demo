@@ -3,10 +3,10 @@ import { browser, by, element, logging } from 'protractor';
 
 describe('Login page should work fine', () => {
   let page: AppPage;
-  page = new AppPage();
   var loginTeacher = element(by.id('demoTeacher'));
 
   beforeEach(() => {
+    page = new AppPage();
     page.navigateTo();
   });
 
@@ -24,15 +24,12 @@ describe('Login page should work fine', () => {
   })
   it('should login when loginTeacher button clicked', () => {
     loginTeacher.click();
-
-    expect(browser.getTitle()).toEqual('GorbachevaGo')
+    page.getAdminHomeText().then((text: string) => {
+      expect(text).toBeTruthy;
+    })
+    //expect(page.getAdminHomeText()).toContain('Здравствуйте')
+    //expect(browser.getTitle()).toEqual('GorbachevaGo')
   })
-
-  
-  // it('should display welcome message', () => {
-  //   page.navigateTo();
-  //   expect(page.getTitleText()).toEqual('gorbacheva-go app is running!');
-  // });
 
   // afterEach(async () => {
   //   // Assert that there are no errors emitted from the browser

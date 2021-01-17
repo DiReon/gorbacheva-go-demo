@@ -1,6 +1,12 @@
 <div class="form-group">
     <label for="file">Выберите файлы для загрузки:</label>
-    <input type="file" multiple = true id="file" (change) = "uploadFile($event)" class="form-control-file">
+    <input 
+        type="file" 
+        multiple = true 
+        id="file" 
+        (change) = "uploadFile($event)" 
+        class="form-control-file" 
+        required>
     <p *ngIf="uploadCompleted">Загрузка завершена!</p>
 </div>
 
@@ -10,3 +16,4 @@
         <button (click) = "deleteFile(url)" class="btn btn-danger">[Х]</button>
     </div>
 </ng-container>
+

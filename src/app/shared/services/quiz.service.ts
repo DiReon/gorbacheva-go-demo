@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
-import { Observable } from 'rxjs';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { map } from 'rxjs/operators';
 import { Quiz } from '../models/quiz';
 
@@ -9,7 +9,10 @@ import { Quiz } from '../models/quiz';
 })
 export class QuizService {
   listRef: AngularFireList<any>;
-  constructor(private db: AngularFireDatabase) { }
+  constructor(
+    @Inject(AngularFireStorage) 
+    private storage: AngularFireStorage,
+    private db: AngularFireDatabase) { }
 
   getAll() {
     this.listRef = this.db.list('/quizzes')
@@ -37,7 +40,11 @@ export class QuizService {
     this.db.object('/quizzes/' + quizId).update(quiz);
   }
 
-  delete(quizId) {
+  delete(quizId, urls: string[]) {
     this.db.list('/quizzes/' + quizId).remove();
+    urls.forEach(u => {
+      if (u) this.storage.storage.refFromURL(u).delete()
+    })
+    
   }
 }

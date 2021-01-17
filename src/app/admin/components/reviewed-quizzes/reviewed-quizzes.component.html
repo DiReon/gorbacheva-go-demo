@@ -1,8 +1,8 @@
 <ul class="list-group">
     <ng-container *ngIf ="student?.quizzesArr">
         <li *ngFor = "let quiz of student?.quizzesArr[2]" class="list-group-item">
-            <a [routerLink] = "['/admin/', student.userId, quiz.quizKey ]">
-                {{quiz.title}}
+            <a [routerLink] = "['/review/', student.userId, quiz.quizKey ]">
+                {{quiz.title}} Баллы: {{ quiz.points }}
             </a>
         </li>
     </ng-container>

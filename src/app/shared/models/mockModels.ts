@@ -1,6 +1,101 @@
 import { AppUser } from './app-user';
 import { Quiz } from './quiz';
 
+export let mockQuiz0: Quiz = {
+  title: 'Logs',
+  category: 'algebra',
+  imageUrls: ['1', '2', '3'],
+  quizUrl: '123',
+  quizId: 'quizId0',
+  assignedTime: undefined,
+  startTime: undefined,
+  endTime: undefined,
+  timeLimit: 99999999,
+  answerUrls: ['1', '2', '3'],
+  isSubmitted: false,
+  isReviewed: false,
+  isStarted: false,
+  quizKey: 'quizKey',
+  teacherComments: null,
+  points: null
+}
+
+export let mockQuiz1: Quiz = {
+  title: 'Triangels',
+  category: 'geometry',
+  imageUrls: ['1', '2', '3'],
+  quizUrl: '123',
+  quizId: 'quizId1',
+  assignedTime: undefined,
+  startTime: undefined,
+  endTime: undefined,
+  timeLimit: 99999999,
+  answerUrls: ['1', '2', '3'],
+  isSubmitted: false,
+  isReviewed: false,
+  isStarted: false,
+  quizKey: 'quizKey',
+  teacherComments: null,
+  points: null
+}
+
+export let mockQuiz2: Quiz = {
+  title: 'Systems',
+  category: 'algebra',
+  imageUrls: ['1', '2', '3'],
+  quizUrl: '123',
+  quizId: 'quizId2',
+  assignedTime: undefined,
+  startTime: undefined,
+  endTime: undefined,
+  timeLimit: 99999999,
+  answerUrls: ['1', '2', '3'],
+  isSubmitted: false,
+  isReviewed: false,
+  isStarted: false,
+  quizKey: 'quizKey',
+  teacherComments: null,
+  points: null
+}
+
+export let mockQuiz3: Quiz = {
+  title: 'Logs - advanced',
+  category: 'algebra',
+  imageUrls: ['1', '2', '3'],
+  quizUrl: '123',
+  quizId: 'quizId3',
+  assignedTime: undefined,
+  startTime: undefined,
+  endTime: undefined,
+  timeLimit: 99999999,
+  answerUrls: ['1', '2', '3'],
+  isSubmitted: false,
+  isReviewed: false,
+  isStarted: false,
+  quizKey: 'quizKey',
+  teacherComments: null,
+  points: null
+}
+
+export let mockQuiz4: Quiz = {
+  title: 'Equations - advanced',
+  category: 'algebra',
+  imageUrls: ['1', '2', '3'],
+  quizUrl: '123',
+  quizId: 'quizId4',
+  assignedTime: undefined,
+  startTime: undefined,
+  endTime: undefined,
+  timeLimit: 99999999,
+  answerUrls: ['1', '2', '3'],
+  isSubmitted: false,
+  isReviewed: false,
+  isStarted: false,
+  quizKey: 'quizKey',
+  teacherComments: null,
+  points: null
+}
+
 export let mockAssignedQuiz: Quiz = {
     title: 'quiz title',
     category: 'algebra',
@@ -15,7 +110,9 @@ export let mockAssignedQuiz: Quiz = {
     isSubmitted: false,
     isReviewed: false,
     isStarted: false,
-    quizKey: 'quizKey'
+    quizKey: 'quizKey',
+    teacherComments: null,
+    points: null
   }
   
 export let mockSubmittedQuiz: Quiz = {
@@ -32,7 +129,9 @@ export let mockSubmittedQuiz: Quiz = {
     isSubmitted: true,
     isReviewed: false,
     isStarted: true,
-    quizKey: 'quizKey1'
+    quizKey: 'quizKey1',
+    teacherComments: null,
+    points: null
   }
   
 export let mockUser1 = new AppUser({

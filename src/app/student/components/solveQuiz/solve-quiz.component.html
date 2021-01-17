@@ -17,5 +17,9 @@
     </div>
 </div>
 Загрузи свое решение:
-<upload-files [userName] = "user?.userName" (upload) = "onUploadFiles($event)"></upload-files>
-<button (click) = "save()" class="btn btn-primary">Отправить на проверку</button>
+<upload-files 
+    [userName] = "user?.userName" 
+    (upload) = "onUploadFiles($event)" 
+    (uploadIsValid) = "uploadValidTrigger($event)">
+</upload-files>
+<button [disabled] = "!uploadIsValid" (click) = "save()" class="btn btn-primary">Отправить на проверку</button>

@@ -40,14 +40,14 @@ export class UserService {
     this.eventService.recordEvent(userName, `отправил на проверку задание "${quiz.title}"`);
   }
 
-  reviewQuiz(user: AppUser) {
-    this.db.list(`/users/${user.userId}`).update('quizzes', user.quizzes);
-    // this.eventService.recordEvent('', `проверено задание ${user.quizzes[user.quizzes.length-1].title}, которое отправил ${user.userName}"`)
+  reviewQuiz(userId: string, quizKey: string, comments: string, points: number) {
+    this.db.object(`/users/${userId}/quizzes/${quizKey}`).update({teacherComments: comments, points: points, isReviewed: true});
+    this.eventService.recordEvent('', `проверено задание ${quizKey}, которое отправил ${userId}"`)
   }
 
-  toggleReviewed(studentId: string, quizKey: string, isReviewed) {
-    this.db.object(`/users/${studentId}/quizzes/${quizKey}`).update({isReviewed: isReviewed})
-  }
+  // toggleReviewed(studentId: string, quizKey: string, isReviewed) {
+  //   this.db.object(`/users/${studentId}/quizzes/${quizKey}`).update({isReviewed: isReviewed})
+  // }
 
   delete(userId) {
     this.db.object('/users/' + userId).remove();
@@ -89,7 +89,8 @@ export class UserService {
       title: quiz.title, 
       quizId: quiz.quizId, 
       quizUrl: quiz.imageUrls[randomUrl], 
-      category: quiz.category
+      category: quiz.category,
+      timeLimit: quiz.timeLimit
     }
     this.db.list(`/users/${studentId}/quizzes`).push(randomQuiz);
   }
@@ -120,7 +121,7 @@ export class UserService {
         dummyId0: {
           assignedTime: 1599998129433,
           quizId: 'M9dvE9abhCbuAUFZWwV',
-          quizUrl: "https://firebasestorage.googleapis.com/v0/b/gorbacheva-go.appspot.com/o/quizzes%2F%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D0%B0%2F%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%8B%2F1.PNG?alt=media&token=e005d4c3-0da1-465b-a2c5-735e625d5daf",
+          quizUrl: "https://firebasestorage.googleapis.com/v0/b/gorbacheva-go-demo.appspot.com/o/quizzes%2F%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D0%B0%2F%D0%9B%D0%BE%D0%B3%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D1%8B%2F0.PNG?alt=media&token=2489af8a-926e-44fe-a1ac-5e730f235988",
           title: 'Логарифмы',
           timeLimit: 40,
           category: 'Алгебра'
@@ -128,7 +129,7 @@ export class UserService {
         dummyId1: {
           assignedTime: 1599998129433,
           quizId: 'M9dvMNUDhPdw271pzdi',
-          quizUrl: "https://firebasestorage.googleapis.com/v0/b/gorbacheva-go.appspot.com/o/quizzes%2F%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D0%B0%2F%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20%D1%83%D1%80%D0%B0%D0%B2%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9%2F0.PNG?alt=media&token=4107e9f3-64c9-48c7-aa1c-56d23c02f5e1",
+          quizUrl: "https://firebasestorage.googleapis.com/v0/b/gorbacheva-go-demo.appspot.com/o/quizzes%2F%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D0%B0%2F%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B%20%D1%83%D1%80%D0%B0%D0%B2%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9%2F0.PNG?alt=media&token=f66c8e4d-0837-406c-bfd4-bbf174394267",
           title: 'Системы уравнений',
           timeLimit: 40,
           category: 'Алгебра'

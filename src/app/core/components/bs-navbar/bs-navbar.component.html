@@ -9,38 +9,28 @@
     <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" style="z-index: 2000">
       <ul class="navbar-nav mr-auto">
         <ng-container *ngIf = "appUser as user; else anonymousUser">
+          <li class="nav-item">
+            <a class="nav-link" routerLink = "/user-profile" (click)="isMenuCollapsed = true">Мой профиль</a>
+          </li>
+          <ng-container *ngIf = "user?.isAdmin">
             <li class="nav-item">
-              <a class="nav-link" routerLink = "/user-profile" (click)="isMenuCollapsed = true">Мой профиль</a>
+                <a class="nav-link" routerLink = "/admin/quizzes" (click)="isMenuCollapsed = true">Задания</a>
             </li>
-            <ng-container *ngIf = "user.isAdmin">
-              <li class="nav-item">
-                  <a class="nav-link" routerLink = "/admin/quizzes" (click)="isMenuCollapsed = true">Задания</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" routerLink = "/admin/groups" (click)="isMenuCollapsed = true">Классы</a>
-              </li>
-            </ng-container>
             <li class="nav-item">
-                <a class="nav-link" (click)="logout()">Выйти</a>
+                <a class="nav-link" routerLink = "/admin/groups" (click)="isMenuCollapsed = true">Классы</a>
             </li>
           </ng-container>
-
+          <li class="nav-item">
+              <a class="nav-link" (click)="logout()">Выйти</a>
+          </li>
+        </ng-container>
+        
         <ng-template #anonymousUser>
           <li class="nav-item">
             <a class="nav-link" routerLink = "/login" (click)="isMenuCollapsed = true">Войти</a>
           </li>
         </ng-template>
         
-        <!-- <li ngbDropdown *ngIf ="appUser && appUser.isAdmin"  class="nav-item dropdown">
-          <a ngbDropdownToggle class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Администрирование
-          </a>
-          <div ngbDropdownMenu class="dropdown-menu">
-              <a class="dropdown-item" routerLink = "/admin/trainings" (click)="isMenuCollapsed = true">Тренировки</a>
-              <a class="dropdown-item" routerLink = "/admin/diet" (click)="isMenuCollapsed = true">Питание</a>
-          </div>
-        </li>
-         -->
       </ul>
     </div>
   </nav>

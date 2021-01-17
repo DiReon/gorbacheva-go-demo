@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
       user => {
         console.log(`Message from AuthGuard: current user is ${user}`);
         
-        if (user&&user!=null) return true;
+        if (user && user!=null) return true;
         this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}})
         return false
       }

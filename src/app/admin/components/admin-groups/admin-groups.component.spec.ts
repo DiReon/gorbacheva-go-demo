@@ -75,16 +75,6 @@ describe('AdminGroupsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should not get the list of students, if group and category not passed in URL', () => {
-  //   mockGroupId = undefined;
-  //   mockCat = undefined;
-  //   fixture = TestBed.createComponent(AdminGroupsComponent);
-  //   component = fixture.componentInstance;
-  //   expect(component._group).toEqual('/')
-  //   expect(component._category).toEqual('/')
-  //   expect(component.students).toBeFalsy();
-  // });
-
   it('should get the list of students, if group and category were passed in URL', () => {
     mockGroupId = '11';
     mockCat = 'algebra';
@@ -184,14 +174,14 @@ describe('AdminGroupsComponent', () => {
     expect(el1.innerText).toContain('Submitted quiz title');
   }));
 
-  it('should render a submitted quizzes with links to admin/student.userId/quizKey', () => {
+  it('should render a submitted quizzes with links to review/student.userId/quizKey', () => {
     let debugElements = fixture.debugElement.queryAll(By.css('.submitted-quizzes'));
     let el0: HTMLElement = debugElements[0].nativeElement.getElementsByTagName("a")[0];
     let href0 = el0.getAttribute('href');
     let el1: HTMLElement = debugElements[1].nativeElement.getElementsByTagName("a")[0];
     let href1 = el1.getAttribute('href');
-    expect(href0).toEqual('/admin/mockId1/quizId1');
-    expect(href1).toEqual('/admin/mockId2/quizId1');
+    expect(href0).toEqual('/review/mockId1/quizId1');
+    expect(href1).toEqual('/review/mockId2/quizId1');
   })
 
   it('should have a routerLink to reviewed quizzes of each student', () => {

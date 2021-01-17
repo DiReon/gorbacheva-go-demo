@@ -23,7 +23,23 @@
     </div>
 </ng-container>
 
-<button (click) = "toggleReviewed()" class="btn btn-primary">
-    <ng-container *ngIf="!quiz?.isReviewed; else reviewed">Проверено</ng-container>
-    <ng-template #reviewed>Не проверено</ng-template>
-</button>
+<ng-container *ngIf = "appUser$ | async as user">
+    <form *ngIf = "user.isAdmin; else student" [formGroup] = "commentsForm" (ngSubmit) = "onSubmit()">
+        <div class="form-group">
+            <label for="comments">Комментарии:</label>
+            <textarea formControlName = "comments" id="comments" class="form-control" placeholder="Оставьте здесь комментарии"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="points">Баллы:</label>
+            <input formControlName = "points" type="number" id="points" class="form-control">
+            <div *ngIf = "points.touched && points.invalid" class="alert alert-danger">Вы не указали, сколько баллов набрал ученик</div>
+        </div>
+        <button [disabled]="!commentsForm.valid" class="btn btn-success">Отправить ученику</button>
+    </form>
+</ng-container>
+
+<ng-template #student>
+    <p>Баллы: {{ this.quiz?.points }}</p>
+    <p>Комментарии учителя:</p>
+    <p>{{ this.quiz?.teacherComments }}</p>
+</ng-template>

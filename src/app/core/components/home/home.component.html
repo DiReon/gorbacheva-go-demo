@@ -1,4 +1,4 @@
-<h1 *ngIf = "appUser as user" class="greeting">Привет, {{ user.userName }}, {{user.group}} </h1>
+<h1 *ngIf = "appUser as user" class="greeting">Привет, {{ user.userName }}, {{user.group}}</h1>
 <p>Мои задания:</p>
 <ul class="list-group">Задания для выполнения: 
     <div *ngIf = "!assignedQuizzes?.length">отсутствуют</div>
@@ -13,6 +13,8 @@
 </ul>
 <ul class="list-group">Проверенные задания:
     <li *ngFor = "let quiz of reviewedQuizzes" class="list-group-item">
-        {{quiz?.title}}
+        <a [routerLink] = "['/review/', this.appUser.userId, quiz.quizKey ]">
+            {{quiz.title}}
+        </a>
     </li>
 </ul>

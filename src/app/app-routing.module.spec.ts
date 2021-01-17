@@ -62,8 +62,8 @@ describe('routes', () => {
         expect(routes).toContain({path: 'admin/reviewed/:student', component: ReviewedQuizzesComponent, canActivate: [AdminAuthGuard]})
     })
     
-    it('should contain route for admin/:student/:quizKey', () => {
-        expect(routes).toContain({path: 'admin/:student/:quizKey', component: ReviewQuizComponent, canActivate: [AdminAuthGuard]})
+    it('should contain route for review/:student/:quizKey', () => {
+        expect(routes).toContain({path: 'review/:student/:quizKey', component: ReviewQuizComponent, canActivate: [AuthGuard]})
     })
     
     it('should contain route for admin', () => {

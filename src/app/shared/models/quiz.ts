@@ -13,4 +13,6 @@ export interface Quiz {
     isReviewed: boolean;
     isStarted: boolean;
     quizKey: string;
+    teacherComments: string;
+    points: number;
 }

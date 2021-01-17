@@ -24,6 +24,8 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
   isLoaded = false;
   counter$: Observable<number>;
   count: number;
+  uploadIsValid = false;
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -44,7 +46,11 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
         this.isLoaded = true;
         this.quiz.isStarted = true;
         this.userService.startQuiz(this.user.userId, this.quizKey, this.quiz.startTime);
-        this.count = this.quiz.timeLimit + 1 - Math.round((new Date().getTime() - this.quiz.startTime)/60000);
+        console.log(`timelimit: ${this.quiz.timeLimit}`);
+        
+        this.count = +this.quiz.timeLimit + 1 - Math.round((new Date().getTime() - this.quiz.startTime)/60000);
+        console.log(Math.round((new Date().getTime() - this.quiz.startTime)/60000));
+        
         console.log("Count: ", this.count);
         
         this.counter$ = timer(0, 60000).pipe(
@@ -59,6 +65,10 @@ export class SolveQuizComponent implements OnInit, OnDestroy {
 
   onUploadFiles(urls) {
     this.quiz.answerUrls = urls;
+  }
+
+  uploadValidTrigger(value: boolean) {
+    this.uploadIsValid = value;
   }
 
   save() {

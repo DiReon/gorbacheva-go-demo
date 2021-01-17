@@ -25,15 +25,13 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.subscription = this.authService.appUser$.subscribe(user => {
       console.log("Username", user);
-      this.appUser = new AppUser(user);
       
       if (user) {
+        this.appUser = new AppUser(user);
         if (user.isAdmin) this.router.navigate(['/admin']);
         if (!user.group&&!user.isAdmin) this.router.navigate(['/user-profile'])
-      }
-
-      if (this.appUser.quizzes) 
-        [this.assignedQuizzes, this.submittedQuizzes, this.reviewedQuizzes] = this.appUser.quizzesArr;
+        if (this.appUser.quizzes) 
+        [this.assignedQuizzes, this.submittedQuizzes, this.reviewedQuizzes] = this.appUser.quizzesArr;   }
     })
   }
 
